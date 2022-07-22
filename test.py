@@ -11,8 +11,6 @@ def convert_Y(Ys,i):
         Ys[Ys==i]=1
         return Ys
 for value in values:
-            print(value)
-            y=x.copy()
-            sample_Y=convert_Y(y,value)
+            print(value)          
             print(sample_Y)
             list_Y.append(sample_Y)
