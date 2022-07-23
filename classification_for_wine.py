@@ -48,31 +48,31 @@ Xs_sqrt= np.sqrt(Xs_train1)
 
 
 
-# lr=0.1
-# rl=1
-# classification=BinaryClassification(Xs_train1,Ys_train1,lr,rl)
+lr=0.1
+rl=1
+classification=BinaryClassification(Xs_train1,Ys_train1,lr,rl)
 
-# for epoch in range(1000):
-#     if epoch % 100==0:
-        
-#         loss = classification.CostFunc()
-#         accuracy = classification.evaluate(Xs_test1,Ys_test1)
-#         print(f"loss epoch {epoch}: {loss}")       
-#         print(f"Accuracy epoch {epoch}: {accuracy}")
-#         print()
-#     classification.reAssign()
-
-lr=0.01
-rl=0.5
-classification=OneVsAllClassification(Xs_train2,Ys_train2,lr)
 for epoch in range(1000):
-    if epoch % 300==0:
+    if epoch % 100==0:
         
-        loss = classification.TotalCostFunc()
-        TotalLoss=sum(loss)
-        accuracies= classification.evaluate(Xs_test2,Ys_test2)
-        print(f"loss epoch {epoch}: {loss}")
-        print(f"total loss epoch {epoch}: {TotalLoss}")       
-        print(f"Accuracy epoch {epoch}: {accuracies}")
+        loss = classification.CostFunc()
+        accuracy = classification.evaluate(Xs_test1,Ys_test1)
+        print(f"loss epoch {epoch}: {loss}")       
+        print(f"Accuracy epoch {epoch}: {accuracy}")
         print()
-    classification.TotalReAssign()
+    classification.reAssign()
+
+# lr=0.01
+# rl=0.5
+# classification=OneVsAllClassification(Xs_train2,Ys_train2,lr)
+# for epoch in range(1000):
+#     if epoch % 300==0:
+        
+#         loss = classification.TotalCostFunc()
+#         TotalLoss=sum(loss)
+#         accuracies= classification.evaluate(Xs_test2,Ys_test2)
+#         print(f"loss epoch {epoch}: {loss}")
+#         print(f"total loss epoch {epoch}: {TotalLoss}")       
+#         print(f"Accuracy epoch {epoch}: {accuracies}")
+#         print()
+#     classification.TotalReAssign()
