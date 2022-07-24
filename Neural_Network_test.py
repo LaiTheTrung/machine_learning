@@ -37,9 +37,11 @@ Ys_test1 = Ys_df.iloc[:,LenThreshold:].to_numpy()-5
 
 ########################
 #BINARY TRAINING SET
+num_layers=4
+num_unit_per_layer=5
 lr=1
 rl=1.5
-BNW = NeuralNetwork(Xs_train1,Ys_train1,lr,rl)
+BNW = NeuralNetwork(Xs_train1,Ys_train1,lr,rl,num_layers,num_unit_per_layer)
 for epoch in range (1000):
    
     if epoch % 100==0:
@@ -52,6 +54,8 @@ for epoch in range (1000):
     BNW.ReAssign()
 
 # MULTIBLE 
+# num_layers=4
+# num_unit_per_layer=5
 # lr=1
 # rl=1
 # BNW = NeuralNetwork(Xs_train,Ys_train,lr,rl)
