@@ -47,12 +47,13 @@ class BinaryClassification():
         return J
     
     def regularization(self,theta):
-        return (self.rl/2)*np.mean(theta**2)
+        return (self.rl/2)*np.mean(theta[1:]**2)  
 
     def reAssign(self):
         hx = self.hypothesis(self.Xs)
-        regularization_theta0=np.array([0]).reshape(1,1)
-        regularization_reduce= np.concatenate(np.array([0]),(self.rl/self.m)*self.theta[1:])
+        regularization_theta0=np.zeros([1,1]).reshape(1,1)
+        regularization_thetaj=(self.rl/self.m)*self.theta[1:]      
+        regularization_reduce= np.concatenate([regularization_theta0,regularization_thetaj],axis=0)
         reduce_temp = self.lr*np.mean((hx-self.Ys)*self.Xs, axis=1).reshape(self.n,1)+regularization_reduce
         self.theta -= reduce_temp
     
@@ -94,8 +95,12 @@ class OneVsAllClassification():
             self.list_Y.append(sample_Y)
 
     def convert_Y(self,Ys,i):
-        Ys[Ys==i]=0
-        Ys[Ys!=0]=1
+        if i!=0:
+            Ys[Ys!=i]=0
+            Ys[Ys!=0]=1
+        else: 
+            Ys+=1
+            Ys[Ys!=1]=0
         return Ys
 
     def transform(self,Xs,eval=True):     
@@ -136,7 +141,7 @@ class OneVsAllClassification():
         return J
 
     def regularization(self,theta):
-        return (self.rl/2)*np.mean(theta**2)  
+        return (self.rl/2)*np.mean(theta[1:]**2)  
 
     
 
@@ -150,7 +155,10 @@ class OneVsAllClassification():
 
     def reAssign(self,Ys,cur_theta):
         hx = self.hypothesis(self.Xs,cur_theta)
-        reduce_temp = self.lr*np.mean((hx-Ys)*self.Xs, axis=1).reshape(self.n,1)+(self.rl/self.m)*cur_theta
+        regularization_theta0=np.zeros([1,1]).reshape(1,1)
+        regularization_thetaj=(self.rl/self.m)*cur_theta[1:]      
+        regularization_reduce= np.concatenate([regularization_theta0,regularization_thetaj],axis=0)
+        reduce_temp = self.lr*np.mean((hx-Ys)*self.Xs, axis=1).reshape(self.n,1)+regularization_reduce
         cur_theta -= reduce_temp
         return cur_theta
     
@@ -190,4 +198,4 @@ class OneVsAllClassification():
             accuracy = (pred_len-error_case)/pred_len
             accuracies.append(accuracy)        
         return accuracies
-
+    
